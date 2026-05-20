@@ -1,0 +1,64 @@
+import { Signal } from '@swissjs/core';
+
+component Counter {
+  state {
+    let count: number = 0;
+    let step: number = 1;
+  }
+
+  computed get doubled() {
+    return this.count * 2;
+  }
+
+  computed get canDecrement() {
+    return this.count >= this.step;
+  }
+
+  mount {
+    console.log('Counter mounted, initial count:', this.count);
+  }
+
+  increment() {
+    this.count += this.step;
+  }
+
+  decrement() {
+    if (this.canDecrement) {
+      this.count -= this.step;
+    }
+  }
+
+  reset() {
+    this.count = 0;
+  }
+
+  render() {
+    return html`
+      <div class="counter">
+        <h1>Counter</h1>
+        <p class="value">${this.count}</p>
+        <p class="doubled">Doubled: ${this.doubled}</p>
+        <div class="controls">
+          <button onclick="${() => this.decrement()}" *if="${this.canDecrement}">
+            − ${this.step}
+          </button>
+          <button onclick="${() => this.reset()}">Reset</button>
+          <button onclick="${() => this.increment()}">
+            + ${this.step}
+          </button>
+        </div>
+        <label>
+          Step:
+          <input
+            type="number"
+            min="1"
+            value="${this.step}"
+            oninput="${(e: InputEvent) => {
+              this.step = Number((e.target as HTMLInputElement).value);
+            }}"
+          />
+        </label>
+      </div>
+    `;
+  }
+}

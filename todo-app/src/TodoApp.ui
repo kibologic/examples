@@ -1,0 +1,95 @@
+import { Signal } from '@swissjs/core';
+
+interface Todo {
+  id: number;
+  text: string;
+  done: boolean;
+}
+
+component TodoApp {
+  state {
+    let todos: Todo[] = [];
+    let input: string = '';
+    let nextId: number = 1;
+    let filter: 'all' | 'active' | 'done' = 'all';
+  }
+
+  computed get filtered() {
+    return this.todos.filter((t) => {
+      if (this.filter === 'active') return !t.done;
+      if (this.filter === 'done') return t.done;
+      return true;
+    });
+  }
+
+  computed get remaining() {
+    return this.todos.filter((t) => !t.done).length;
+  }
+
+  mount {
+    const saved = localStorage.getItem('todos');
+    if (saved) this.todos = JSON.parse(saved);
+  }
+
+  effect {
+    localStorage.setItem('todos', JSON.stringify(this.todos));
+  }
+
+  addTodo() {
+    const text = this.input.trim();
+    if (!text) return;
+    this.todos = [...this.todos, { id: this.nextId++, text, done: false }];
+    this.input = '';
+  }
+
+  toggle(id: number) {
+    this.todos = this.todos.map((t) =>
+      t.id === id ? { ...t, done: !t.done } : t,
+    );
+  }
+
+  remove(id: number) {
+    this.todos = this.todos.filter((t) => t.id !== id);
+  }
+
+  render() {
+    return html`
+      <div class="todo-app">
+        <h1>Todos <span class="count">${this.remaining} remaining</span></h1>
+
+        <form onsubmit="${(e: Event) => { e.preventDefault(); this.addTodo(); }}">
+          <input
+            type="text"
+            placeholder="What needs to be done?"
+            v-bind="input"
+            oninput="${(e: InputEvent) => (this.input = (e.target as HTMLInputElement).value)}"
+          />
+          <button type="submit">Add</button>
+        </form>
+
+        <div class="filters">
+          ${(['all', 'active', 'done'] as const).map((f) => html`
+            <button
+              class="${this.filter === f ? 'active' : ''}"
+              onclick="${() => (this.filter = f)}"
+            >${f}</button>
+          `)}
+        </div>
+
+        <ul>
+          ${this.filtered.map((todo) => html`
+            <li class="${todo.done ? 'done' : ''}">
+              <input
+                type="checkbox"
+                checked="${todo.done}"
+                onchange="${() => this.toggle(todo.id)}"
+              />
+              <span>${todo.text}</span>
+              <button onclick="${() => this.remove(todo.id)}">✕</button>
+            </li>
+          `)}
+        </ul>
+      </div>
+    `;
+  }
+}

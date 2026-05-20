@@ -1,0 +1,72 @@
+import { Signal } from '@swissjs/core';
+
+@requires('network')
+component UserList {
+  state {
+    let users: { id: number; name: string; email: string }[] = [];
+    let loading: boolean = false;
+    let error: string | null = null;
+    let search: string = '';
+  }
+
+  computed get filtered() {
+    if (!this.search) return this.users;
+    const q = this.search.toLowerCase();
+    return this.users.filter(
+      (u) => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q),
+    );
+  }
+
+  async mount() {
+    await this.fetchUsers();
+  }
+
+  async fetchUsers() {
+    this.loading = true;
+    this.error = null;
+    try {
+      const res = await fetch('https://jsonplaceholder.typicode.com/users');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      this.users = await res.json();
+    } catch (e) {
+      this.error = e instanceof Error ? e.message : 'Failed to load users';
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  render() {
+    return html`
+      <div class="user-list">
+        <h1>Users</h1>
+
+        <input
+          type="search"
+          placeholder="Search by name or email…"
+          oninput="${(e: InputEvent) => (this.search = (e.target as HTMLInputElement).value)}"
+        />
+
+        ${this.loading ? html`<p class="loading">Loading…</p>` : ''}
+        ${this.error ? html`
+          <div class="error">
+            <p>${this.error}</p>
+            <button onclick="${() => this.fetchUsers()}">Retry</button>
+          </div>
+        ` : ''}
+
+        <ul>
+          ${this.filtered.map((user) => html`
+            <li>
+              <strong>${user.name}</strong>
+              <a href="mailto:${user.email}">${user.email}</a>
+            </li>
+          `)}
+        </ul>
+
+        <p class="summary">
+          Showing ${this.filtered.length} of ${this.users.length} users
+        </p>
+      </div>
+    `;
+  }
+}
