@@ -1,0 +1,42 @@
+import { SwissComponent } from '@kibologic/core';
+import { NavBar } from './NavBar.uix';
+import { ContactsPage } from '../pages/ContactsPage.uix';
+import { ContactDetailPage } from '../pages/ContactDetailPage.uix';
+import { DealsPage } from '../pages/DealsPage.uix';
+import { ActivityPage } from '../pages/ActivityPage.uix';
+
+component AppShell {
+  _getContactId(route: string): string {
+    if (route.startsWith('/contacts/')) return route.replace('/contacts/', '');
+    if (route.startsWith('/contact/')) return route.replace('/contact/', '');
+    return '';
+  }
+
+  _isContactDetail(route: string): boolean {
+    return route.startsWith('/contacts/') || route.startsWith('/contact/');
+  }
+
+  render() {
+    const { route } = this.props;
+    const r = route || '/contacts';
+    const isContactDetail = this._isContactDetail(r);
+    const contactId = this._getContactId(r);
+    const isContacts = r === '/' || r === '/contacts';
+    const isDeals = r === '/deals';
+    const isActivity = r === '/activity';
+    return (
+      <div style="min-height: 100vh; background: #f9fafb;">
+        <NavBar activeRoute={r} />
+        <main style="padding: 28px 32px; max-width: 1200px; margin: 0 auto;">
+          {isContacts ? <ContactsPage /> : null}
+          {isContactDetail ? <ContactDetailPage contactId={contactId} /> : null}
+          {isDeals ? <DealsPage /> : null}
+          {isActivity ? <ActivityPage /> : null}
+          {(!isContacts && !isContactDetail && !isDeals && !isActivity) ? (
+            <div style="color: #9ca3af; font-size: 16px; padding: 40px 0;">Page not found</div>
+          ) : null}
+        </main>
+      </div>
+    );
+  }
+}
