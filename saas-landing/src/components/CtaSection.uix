@@ -1,0 +1,19 @@
+import { SwissComponent } from '@kibologic/core';
+
+component CtaSection {
+  render() {
+    return (
+      <section style="padding:96px 24px;background:linear-gradient(135deg,#4f46e5 0%,#6366f1 100%);">
+        <div style="max-width:700px;margin:0 auto;text-align:center;">
+          <h2 style="font-size:38px;font-weight:900;color:#fff;margin-bottom:16px;letter-spacing:-1px;">Ready to transform your analytics?</h2>
+          <p style="font-size:18px;color:#c4b5fd;margin-bottom:36px;line-height:1.6;">Join 2,000+ teams already using StreamFlow. Start your free trial today — no credit card required.</p>
+          <div style="display:flex;align-items:center;justify-content:center;gap:14px;">
+            <a href="/" style="background:#fff;color:#4f46e5;text-decoration:none;border-radius:10px;padding:14px 32px;font-size:16px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,0.15);">Start Free Trial</a>
+            <a href="/" style="background:transparent;color:#fff;text-decoration:none;border-radius:10px;padding:14px 32px;font-size:16px;font-weight:700;border:2px solid rgba(255,255,255,0.4);">Book a Demo</a>
+          </div>
+          <p style="margin-top:20px;font-size:13px;color:#a5b4fc;">Free plan available. No credit card needed. Cancel anytime.</p>
+        </div>
+      </section>
+    );
+  }
+}

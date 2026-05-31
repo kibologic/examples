@@ -1,0 +1,33 @@
+import { mount, SwissComponent, Signal, createElement, Fragment } from '@kibologic/core';
+import { SiteLayout } from './components/SiteLayout.uix';
+
+globalThis.createElement = createElement;
+globalThis.Fragment = Fragment;
+
+const route$ = new Signal(window.location.pathname);
+
+window.addEventListener('popstate', () => {
+  route$.value = window.location.pathname;
+  window.scrollTo(0, 0);
+});
+
+document.addEventListener('click', (e: any) => {
+  const link = e.target.closest('a');
+  if (link && link.href && link.href.startsWith(window.location.origin) && !link.target && !e.metaKey && !e.ctrlKey) {
+    const p = link.getAttribute('href');
+    if (p && p.startsWith('/') && !p.includes('#')) {
+      e.preventDefault();
+      history.pushState(null, '', p);
+      route$.value = p;
+      window.scrollTo(0, 0);
+    }
+  }
+});
+
+component Router {
+  render() {
+    return <SiteLayout route={route$.value} />;
+  }
+}
+
+mount(Router, document.getElementById('app'));

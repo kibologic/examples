@@ -1,0 +1,115 @@
+import { SwissComponent } from '@kibologic/core';
+import { TagBadge } from '../components/TagBadge.uix';
+import { PostCard } from '../components/PostCard.uix';
+
+component PostPage {
+  props {
+    slug: string = '';
+  }
+
+  _post(): any {
+    return {
+      title: 'Building reactive UIs with the SwissJS state system',
+      category: 'SwissJS',
+      author: 'Alex Chen',
+      date: 'May 28, 2026',
+      readTime: '7 min read',
+      bio: 'Alex Chen is a frontend engineer and SwissJS contributor. He writes about UI architecture, performance, and developer tooling.',
+    };
+  }
+
+  _related(): any[] {
+    return [
+      { id: 7, title: 'Signal primitives vs state blocks: when to use each', excerpt: 'SwissJS gives you two reactivity primitives. Understanding the difference between a Signal and a state block is key to writing maintainable components.', author: 'Alex Chen', date: 'May 9, 2026', readTime: '5 min read', category: 'SwissJS', slug: 'signals-vs-state' },
+      { id: 12, title: 'Routing patterns without a router library', excerpt: 'SwissJS has no official router. In this post we build a lightweight SPA router using Signals and the History API — under 50 lines of code.', author: 'Priya Nair', date: 'Apr 21, 2026', readTime: '7 min read', category: 'SwissJS', slug: 'routing-without-library' },
+      { id: 2, title: 'Component patterns in .uix files: a practical guide', excerpt: 'We explore the most effective patterns for organizing components in SwissJS, from simple presentational components to stateful containers with helper methods.', author: 'Maria Santos', date: 'May 25, 2026', readTime: '5 min read', category: 'Tutorial', slug: 'component-patterns-uix' },
+    ];
+  }
+
+  _comments(): any[] {
+    return [
+      { id: 1, author: 'Sophie Turner', date: 'May 29, 2026', text: 'Fantastic article, Alex. The explanation of how state blocks compile down to setter methods really clicked for me. I had been wondering why helper methods cannot contain JSX — now it makes sense.' },
+      { id: 2, author: 'Daniel Park', date: 'May 29, 2026', text: 'The comparison with Solid signals is spot on. One thing I would add: the SwissJS state system also avoids the stale closure problem that bites so many React developers.' },
+      { id: 3, author: 'James Wu', date: 'May 30, 2026', text: 'We migrated a 40-component dashboard to SwissJS last sprint. Performance is noticeably better, and the code is cleaner. This post was our team reference during the migration.' },
+    ];
+  }
+
+  render() {
+    const post = this._post();
+    const related = this._related();
+    const comments = this._comments();
+
+    return (
+      <div style="max-width:800px;margin:0 auto;padding:48px 24px;">
+        <div style="margin-bottom:32px;">
+          <a href="/" style="color:#2563eb;text-decoration:none;font-size:14px;font-weight:500;">← Back to blog</a>
+        </div>
+
+        <article>
+          <div style="margin-bottom:16px;">
+            <TagBadge category={post.category} />
+          </div>
+          <h1 style="font-size:34px;font-weight:800;color:#111827;line-height:1.25;margin-bottom:20px;">{post.title}</h1>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid #e5e7eb;">
+            <div style="width:40px;height:40px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;">AC</div>
+            <div>
+              <p style="font-size:14px;font-weight:600;color:#111827;">{post.author}</p>
+              <p style="font-size:13px;color:#6b7280;">{post.date} · {post.readTime}</p>
+            </div>
+          </div>
+
+          <div style="font-size:16px;color:#374151;line-height:1.8;">
+            <p style="margin-bottom:20px;">Reactivity is the heart of any modern UI framework. In SwissJS, the <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">state</code> block gives components a structured way to declare mutable values that automatically trigger re-renders when changed. Unlike React hooks or Vue's <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">ref</code>, SwissJS state is compiled to setter methods on the component class — which means no proxy traps, no dependency arrays, and no stale closures.</p>
+
+            <p style="margin-bottom:20px;">Every property declared in a <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">state { }</code> block generates a backing field and a reactive setter. When the setter is called — whether from an event handler or a lifecycle method — the runtime schedules a microtask to re-render the component. Because the scheduler batches updates within a single event loop tick, rapid state changes do not cause multiple renders.</p>
+
+            <div style="background:#1e293b;border-radius:10px;padding:24px;margin-bottom:24px;overflow-x:auto;">
+              <pre style="color:#e2e8f0;font-size:13px;line-height:1.7;font-family:monospace;margin:0;">{'component Counter {\n  state {\n    let count: number = 0;\n  }\n\n  _increment() {\n    this.count = this.count + 1;\n  }\n\n  render() {\n    return (\n      <div>\n        <p>{this.count}</p>\n        <button onClick={() => this._increment()}>+</button>\n      </div>\n    );\n  }\n}'}</pre>
+            </div>
+
+            <p style="margin-bottom:20px;">Notice that JSX lives exclusively in the <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">render()</code> method. This is a deliberate constraint: it keeps the compiler simple and makes it trivially easy to analyse what each component produces visually. Helper methods like <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">_increment()</code> are pure logic — they read and write state but never produce markup.</p>
+
+            <p style="margin-bottom:20px;">When you need to share state between components, you reach for a <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">Signal</code>. Signals are module-level reactive values. Any component that reads a signal in its <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">render()</code> method will automatically re-render when the signal changes. This is how the SPA router in this blog works — a single <code style="background:#f3f4f6;padding:2px 6px;border-radius:4px;font-size:14px;">route$</code> signal drives the whole page tree.</p>
+          </div>
+        </article>
+
+        <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:24px;margin-top:40px;display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:48px;height:48px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0;">AC</div>
+          <div>
+            <p style="font-size:15px;font-weight:700;color:#111827;margin-bottom:6px;">{post.author}</p>
+            <p style="font-size:14px;color:#6b7280;line-height:1.6;">{post.bio}</p>
+          </div>
+        </div>
+
+        <div style="margin-top:48px;">
+          <h2 style="font-size:20px;font-weight:700;color:#111827;margin-bottom:24px;">Related Posts</h2>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+            {related.map((p: any) => (
+              <a href={'/post/' + p.slug} key={p.id} style="text-decoration:none;">
+                <PostCard id={p.id} title={p.title} excerpt={p.excerpt} author={p.author} date={p.date} readTime={p.readTime} category={p.category} slug={p.slug} />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div style="margin-top:48px;">
+          <h2 style="font-size:20px;font-weight:700;color:#111827;margin-bottom:24px;">Comments ({comments.length})</h2>
+          <div>
+            {comments.map((c: any) => (
+              <div key={c.id} style="border-top:1px solid #e5e7eb;padding:24px 0;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                  <div style="width:32px;height:32px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#374151;">{c.author.charAt(0)}</div>
+                  <div>
+                    <p style="font-size:14px;font-weight:600;color:#111827;">{c.author}</p>
+                    <p style="font-size:12px;color:#9ca3af;">{c.date}</p>
+                  </div>
+                </div>
+                <p style="font-size:14px;color:#374151;line-height:1.7;">{c.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

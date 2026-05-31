@@ -1,0 +1,43 @@
+import { SwissComponent } from '@kibologic/core';
+import { SiteHeader } from './SiteHeader.uix';
+import { SiteFooter } from './SiteFooter.uix';
+import { HomePage } from '../pages/HomePage.uix';
+import { PostPage } from '../pages/PostPage.uix';
+import { CategoryPage } from '../pages/CategoryPage.uix';
+
+component SiteLayout {
+  _isPost(route: string): boolean {
+    return route.startsWith('/post/');
+  }
+
+  _isCategory(route: string): boolean {
+    return route.startsWith('/category/');
+  }
+
+  _getCategory(route: string): string {
+    return route.replace('/category/', '');
+  }
+
+  _getSlug(route: string): string {
+    return route.replace('/post/', '');
+  }
+
+  render() {
+    const { route } = this.props;
+    const r = route || '/';
+    return (
+      <div style="min-height:100vh;background:#fff;">
+        <SiteHeader />
+        <div>
+          {r === '/' ? <HomePage /> : null}
+          {this._isPost(r) ? <PostPage slug={this._getSlug(r)} /> : null}
+          {this._isCategory(r) ? <CategoryPage category={this._getCategory(r)} /> : null}
+          {(r !== '/' && !this._isPost(r) && !this._isCategory(r)) ? (
+            <div style="max-width:1100px;margin:0 auto;padding:80px 24px;text-align:center;color:#6b7280;font-size:16px;">Page not found.</div>
+          ) : null}
+        </div>
+        <SiteFooter />
+      </div>
+    );
+  }
+}

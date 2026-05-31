@@ -1,0 +1,47 @@
+import { SwissComponent } from '@kibologic/core';
+
+component TestimonialsSection {
+  _testimonials(): any[] {
+    return [
+      { id: 1, name: 'Rachel Kim', title: 'Head of Growth', company: 'Loopbase', quote: 'StreamFlow replaced three separate tools we were using for analytics. The dashboard builder is incredibly intuitive — our whole team adopted it in a day.' },
+      { id: 2, name: 'Marcus Webb', title: 'CTO', company: 'Frondel', quote: 'The real-time alerts have saved us from two major incidents this quarter. We set up threshold rules in minutes and now we hear about problems before our customers do.' },
+      { id: 3, name: 'Aisha Patel', title: 'Product Manager', company: 'Zentryx', quote: 'I have tried six analytics platforms in the last two years. StreamFlow is the only one where I can actually answer questions quickly without writing SQL or asking an engineer.' },
+      { id: 4, name: 'Tomasz Nowak', title: 'Data Analyst', company: 'Vaultline', quote: 'The API is clean and the webhook integrations work flawlessly. We push data from StreamFlow into our internal BI stack automatically every night.' },
+      { id: 5, name: 'Chloe Dupont', title: 'VP Engineering', company: 'Larkly', quote: 'We scaled from 10k to 500k events per day and StreamFlow never missed a beat. The team was responsive when we needed custom retention policies for compliance.' },
+      { id: 6, name: 'David Osei', title: 'Founder', company: 'Stackhub', quote: 'Started on the free tier and upgraded to Pro within two weeks. The lifetime value data alone justified the cost. Our investor dashboards now run on StreamFlow.' },
+    ];
+  }
+
+  render() {
+    const testimonials = this._testimonials();
+    return (
+      <section style="padding:96px 24px;background:#fff;">
+        <div style="max-width:1100px;margin:0 auto;">
+          <div style="text-align:center;margin-bottom:56px;">
+            <h2 style="font-size:36px;font-weight:800;color:#0f172a;margin-bottom:14px;letter-spacing:-1px;">Loved by data-driven teams</h2>
+            <p style="font-size:17px;color:#6b7280;">See what teams around the world are saying about StreamFlow.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+            {testimonials.map((t: any) => (
+              <div key={t.id} style="background:#f8faff;border:1px solid #e0e7ff;border-radius:14px;padding:28px;">
+                <div style="display:flex;margin-bottom:12px;">
+                  {[1,2,3,4,5].map((s: number) => (
+                    <span key={s} style="color:#f59e0b;font-size:14px;">&#11088;</span>
+                  ))}
+                </div>
+                <p style="font-size:14px;color:#374151;line-height:1.7;margin-bottom:20px;font-style:italic;">"{t.quote}"</p>
+                <div style="display:flex;align-items:center;gap:10px;">
+                  <div style="width:36px;height:36px;border-radius:50%;background:#4f46e5;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;">{t.name.charAt(0)}</div>
+                  <div>
+                    <p style="font-size:14px;font-weight:700;color:#0f172a;">{t.name}</p>
+                    <p style="font-size:12px;color:#6b7280;">{t.title}, {t.company}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+}

@@ -1,0 +1,60 @@
+import { SwissComponent } from '@kibologic/core';
+
+component HeroSection {
+  render() {
+    return (
+      <section style="background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 40%,#e0e7ff 100%);padding:100px 24px 80px;">
+        <div style="max-width:900px;margin:0 auto;text-align:center;">
+          <div style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #c4b5fd;border-radius:20px;padding:6px 16px;margin-bottom:28px;">
+            <span style="font-size:14px;">&#10024;</span>
+            <span style="font-size:13px;font-weight:600;color:#4f46e5;">New: AI-powered insights</span>
+          </div>
+
+          <h1 style="font-size:58px;font-weight:900;color:#0f172a;line-height:1.1;margin-bottom:20px;letter-spacing:-2px;">Turn your data into<br />decisions, instantly.</h1>
+          <p style="font-size:19px;color:#6b7280;line-height:1.6;margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto;">StreamFlow gives your team real-time analytics, beautiful dashboards, and smart alerts — all in one place. No SQL required.</p>
+
+          <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:48px;">
+            <a href="/" style="background:#4f46e5;color:#fff;text-decoration:none;border-radius:10px;padding:14px 28px;font-size:16px;font-weight:700;box-shadow:0 4px 14px rgba(79,70,229,0.35);">Start Free Trial</a>
+            <a href="/" style="background:#fff;color:#4f46e5;text-decoration:none;border-radius:10px;padding:14px 28px;font-size:16px;font-weight:700;border:2px solid #c4b5fd;">View Demo</a>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:56px;">
+            <span style="font-size:14px;">&#11088;&#11088;&#11088;&#11088;&#11088;</span>
+            <span style="font-size:14px;color:#6b7280;font-weight:500;">Trusted by <strong style="color:#0f172a;">2,000+ teams</strong> worldwide</span>
+          </div>
+
+          <div style="background:#1e1b4b;border-radius:16px;padding:24px;box-shadow:0 25px 60px rgba(79,70,229,0.25);max-width:700px;margin:0 auto;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#ef4444;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#f59e0b;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#10b981;"></div>
+              <span style="margin-left:8px;font-size:12px;color:#6366f1;font-weight:500;">StreamFlow Dashboard</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+              <div style="background:#312e81;border-radius:8px;padding:14px;">
+                <p style="font-size:11px;color:#a5b4fc;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Revenue</p>
+                <p style="font-size:20px;font-weight:700;color:#fff;">$2.4M</p>
+                <p style="font-size:11px;color:#10b981;">+24% this month</p>
+              </div>
+              <div style="background:#312e81;border-radius:8px;padding:14px;">
+                <p style="font-size:11px;color:#a5b4fc;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Active Users</p>
+                <p style="font-size:20px;font-weight:700;color:#fff;">18,432</p>
+                <p style="font-size:11px;color:#10b981;">+12% this week</p>
+              </div>
+              <div style="background:#312e81;border-radius:8px;padding:14px;">
+                <p style="font-size:11px;color:#a5b4fc;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">Conversion</p>
+                <p style="font-size:20px;font-weight:700;color:#fff;">3.8%</p>
+                <p style="font-size:11px;color:#10b981;">+0.4% this week</p>
+              </div>
+            </div>
+            <div style="background:#312e81;border-radius:8px;padding:14px;height:80px;display:flex;align-items:flex-end;gap:6px;overflow:hidden;">
+              {[40, 65, 45, 80, 55, 90, 70, 95, 60, 85, 75, 100].map((h: number, i: number) => (
+                <div key={i} style={`flex:1;background:linear-gradient(to top,#4f46e5,#818cf8);border-radius:3px 3px 0 0;height:${h}%;opacity:0.8;`}></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+}

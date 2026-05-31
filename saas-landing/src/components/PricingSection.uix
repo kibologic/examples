@@ -1,0 +1,130 @@
+import { SwissComponent } from '@kibologic/core';
+
+component PricingSection {
+  state {
+    let annual: boolean = false;
+  }
+
+  _toggleBilling() {
+    this.annual = !this.annual;
+  }
+
+  _tiers(): any[] {
+    return [
+      {
+        name: 'Starter',
+        price: '$0',
+        annualPrice: '$0',
+        period: 'forever free',
+        desc: 'Perfect for small teams getting started with analytics.',
+        features: ['5 users', '3 dashboards', '30-day data history', 'Basic charts', 'Email support'],
+        cta: 'Get started free',
+        highlight: false,
+      },
+      {
+        name: 'Pro',
+        price: '$49',
+        annualPrice: '$39',
+        period: 'per month',
+        desc: 'For growing teams that need more power and flexibility.',
+        features: ['25 users', 'Unlimited dashboards', '1-year data history', 'API access', 'Smart alerts', 'Priority support'],
+        cta: 'Start free trial',
+        highlight: true,
+      },
+      {
+        name: 'Enterprise',
+        price: 'Custom',
+        annualPrice: 'Custom',
+        period: 'contact us',
+        desc: 'For large organizations with complex requirements.',
+        features: ['Unlimited users', 'Unlimited everything', 'Dedicated support', '99.99% SLA', 'SSO / SAML', 'Custom contracts'],
+        cta: 'Contact sales',
+        highlight: false,
+      },
+    ];
+  }
+
+  _cardStyle(highlight: boolean): string {
+    if (highlight) return 'background:#4f46e5;border-radius:16px;padding:32px;position:relative;box-shadow:0 20px 48px rgba(79,70,229,0.3);';
+    return 'background:#fff;border:1px solid #e0e7ff;border-radius:16px;padding:32px;';
+  }
+
+  _nameStyle(highlight: boolean): string {
+    if (highlight) return 'font-size:14px;font-weight:700;color:#c4b5fd;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;';
+    return 'font-size:14px;font-weight:700;color:#4f46e5;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;';
+  }
+
+  _priceStyle(highlight: boolean): string {
+    if (highlight) return 'font-size:40px;font-weight:900;color:#fff;margin-bottom:4px;';
+    return 'font-size:40px;font-weight:900;color:#0f172a;margin-bottom:4px;';
+  }
+
+  _periodStyle(highlight: boolean): string {
+    if (highlight) return 'font-size:13px;color:#c4b5fd;margin-bottom:12px;';
+    return 'font-size:13px;color:#9ca3af;margin-bottom:12px;';
+  }
+
+  _descStyle(highlight: boolean): string {
+    if (highlight) return 'font-size:14px;color:#c4b5fd;line-height:1.6;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.15);';
+    return 'font-size:14px;color:#6b7280;line-height:1.6;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid #e5e7eb;';
+  }
+
+  _featureStyle(highlight: boolean): string {
+    if (highlight) return 'font-size:14px;color:#e0e7ff;display:flex;align-items:center;gap:8px;margin-bottom:10px;';
+    return 'font-size:14px;color:#374151;display:flex;align-items:center;gap:8px;margin-bottom:10px;';
+  }
+
+  _checkStyle(highlight: boolean): string {
+    if (highlight) return 'color:#a5b4fc;font-size:16px;flex-shrink:0;';
+    return 'color:#059669;font-size:16px;flex-shrink:0;';
+  }
+
+  _ctaStyle(highlight: boolean): string {
+    if (highlight) return 'display:block;text-align:center;margin-top:28px;background:#fff;color:#4f46e5;text-decoration:none;border-radius:10px;padding:13px 24px;font-size:15px;font-weight:700;';
+    return 'display:block;text-align:center;margin-top:28px;background:#4f46e5;color:#fff;text-decoration:none;border-radius:10px;padding:13px 24px;font-size:15px;font-weight:700;';
+  }
+
+  render() {
+    const tiers = this._tiers();
+    const isAnnual = this.annual;
+
+    return (
+      <section style="padding:96px 24px;background:#f8faff;">
+        <div style="max-width:1100px;margin:0 auto;">
+          <div style="text-align:center;margin-bottom:48px;">
+            <h2 style="font-size:36px;font-weight:800;color:#0f172a;margin-bottom:14px;letter-spacing:-1px;">Simple, transparent pricing</h2>
+            <p style="font-size:17px;color:#6b7280;margin-bottom:28px;">No hidden fees. Cancel anytime.</p>
+            <div style="display:inline-flex;align-items:center;gap:12px;background:#fff;border:1px solid #e0e7ff;border-radius:12px;padding:6px;">
+              <button onClick={() => this._toggleBilling()} style={!isAnnual ? 'background:#4f46e5;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:14px;font-weight:600;cursor:pointer;' : 'background:transparent;color:#6b7280;border:none;padding:8px 20px;font-size:14px;font-weight:500;cursor:pointer;'}>Monthly</button>
+              <button onClick={() => this._toggleBilling()} style={isAnnual ? 'background:#4f46e5;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:14px;font-weight:600;cursor:pointer;' : 'background:transparent;color:#6b7280;border:none;padding:8px 20px;font-size:14px;font-weight:500;cursor:pointer;'}>Annual</button>
+              {isAnnual ? <span style="background:#d1fae5;color:#065f46;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;margin-right:4px;">Save 20%</span> : null}
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:center;">
+            {tiers.map((t: any) => (
+              <div key={t.name} style={this._cardStyle(t.highlight)}>
+                {t.highlight ? (
+                  <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#f59e0b;color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:0.05em;">Most Popular</div>
+                ) : null}
+                <p style={this._nameStyle(t.highlight)}>{t.name}</p>
+                <p style={this._priceStyle(t.highlight)}>{isAnnual ? t.annualPrice : t.price}</p>
+                <p style={this._periodStyle(t.highlight)}>{t.period}</p>
+                <p style={this._descStyle(t.highlight)}>{t.desc}</p>
+                <div>
+                  {t.features.map((f: string) => (
+                    <div key={f} style={this._featureStyle(t.highlight)}>
+                      <span style={this._checkStyle(t.highlight)}>&#10003;</span>
+                      <span>{f}</span>
+                    </div>
+                  ))}
+                </div>
+                <a href="/" style={this._ctaStyle(t.highlight)}>{t.cta}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+}

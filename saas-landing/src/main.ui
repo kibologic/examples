@@ -1,0 +1,13 @@
+import { mount, SwissComponent, createElement, Fragment } from '@kibologic/core';
+import { LandingPage } from './pages/LandingPage.uix';
+
+globalThis.createElement = createElement;
+globalThis.Fragment = Fragment;
+
+component App {
+  render() {
+    return <LandingPage />;
+  }
+}
+
+mount(App, document.getElementById('app'));
