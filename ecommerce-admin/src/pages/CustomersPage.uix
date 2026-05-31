@@ -1,0 +1,68 @@
+import { SwissComponent } from '@kibologic/core';
+
+component CustomersPage {
+  _customers(): any[] {
+    return [
+      { id: 1, name: 'James Banda', email: 'james.banda@example.com', orders: 12, ltv: 'MWK 145,000', joined: '2024-01-15' },
+      { id: 2, name: 'Sarah Phiri', email: 'sarah.phiri@example.com', orders: 8, ltv: 'MWK 87,500', joined: '2024-02-20' },
+      { id: 3, name: 'Peter Mwale', email: 'peter.mwale@example.com', orders: 21, ltv: 'MWK 312,000', joined: '2023-11-08' },
+      { id: 4, name: 'Grace Chirwa', email: 'grace.chirwa@example.com', orders: 5, ltv: 'MWK 43,200', joined: '2024-04-01' },
+      { id: 5, name: 'John Tembo', email: 'john.tembo@example.com', orders: 15, ltv: 'MWK 198,000', joined: '2023-09-14' },
+      { id: 6, name: 'Mary Gondwe', email: 'mary.gondwe@example.com', orders: 33, ltv: 'MWK 512,000', joined: '2023-06-22' },
+      { id: 7, name: 'David Kalua', email: 'david.kalua@example.com', orders: 7, ltv: 'MWK 65,800', joined: '2024-03-10' },
+      { id: 8, name: 'Rose Lungu', email: 'rose.lungu@example.com', orders: 18, ltv: 'MWK 224,000', joined: '2023-12-05' },
+      { id: 9, name: 'Allan Mkandawire', email: 'allan.mk@example.com', orders: 3, ltv: 'MWK 18,600', joined: '2024-05-18' },
+      { id: 10, name: 'Blessings Nyirenda', email: 'blessings.n@example.com', orders: 28, ltv: 'MWK 435,000', joined: '2023-08-30' },
+      { id: 11, name: 'Chisomo Kamanga', email: 'chisomo.k@example.com', orders: 11, ltv: 'MWK 132,000', joined: '2024-01-28' },
+      { id: 12, name: 'Diana Nkhoma', email: 'diana.nkhoma@example.com', orders: 6, ltv: 'MWK 54,900', joined: '2024-04-15' },
+    ];
+  }
+
+  _ltvColor(orders: number): string {
+    if (orders >= 25) return '#059669';
+    if (orders >= 15) return '#2563eb';
+    return '#374151';
+  }
+
+  render() {
+    const customers = this._customers();
+    return (
+      <div>
+        <div style="margin-bottom:24px;">
+          <h1 style="font-size:22px;font-weight:700;color:#111827;">Customers</h1>
+          <p style="font-size:14px;color:#6b7280;margin-top:4px;">{customers.length} customers total</p>
+        </div>
+
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="background:#f9fafb;">
+                <th style="text-align:left;padding:12px 16px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Name</th>
+                <th style="text-align:left;padding:12px 16px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Email</th>
+                <th style="text-align:center;padding:12px 16px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Orders</th>
+                <th style="text-align:right;padding:12px 16px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Lifetime Value</th>
+                <th style="text-align:left;padding:12px 16px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Joined</th>
+              </tr>
+            </thead>
+            <tbody>
+              {customers.map((c: any, i: number) => (
+                <tr key={c.id} style={i % 2 === 0 ? 'background:#fff;' : 'background:#f9fafb;'}>
+                  <td style="padding:14px 16px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                      <div style="width:36px;height:36px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#374151;flex-shrink:0;">{c.name.charAt(0)}</div>
+                      <span style="font-size:14px;font-weight:600;color:#111827;">{c.name}</span>
+                    </div>
+                  </td>
+                  <td style="padding:14px 16px;font-size:13px;color:#6b7280;">{c.email}</td>
+                  <td style="padding:14px 16px;text-align:center;"><span style={`font-size:14px;font-weight:700;color:${this._ltvColor(c.orders)};`}>{c.orders}</span></td>
+                  <td style="padding:14px 16px;font-size:14px;font-weight:700;color:#059669;text-align:right;">{c.ltv}</td>
+                  <td style="padding:14px 16px;font-size:13px;color:#6b7280;">{c.joined}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+}

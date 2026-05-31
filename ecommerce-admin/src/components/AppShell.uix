@@ -1,0 +1,29 @@
+import { SwissComponent } from '@kibologic/core';
+import { AdminNav } from './AdminNav.uix';
+import { DashboardPage } from '../pages/DashboardPage.uix';
+import { ProductsPage } from '../pages/ProductsPage.uix';
+import { OrdersPage } from '../pages/OrdersPage.uix';
+import { CustomersPage } from '../pages/CustomersPage.uix';
+
+component AppShell {
+  render() {
+    const { route } = this.props;
+    const r = route || '/';
+    return (
+      <div style="min-height: 100vh; background: #f9fafb; display: flex;">
+        <AdminNav activeRoute={r} />
+        <div style="margin-left: 220px; flex: 1; min-height: 100vh;">
+          <main style="padding: 32px;">
+            {(r === '/' || r === '/dashboard') ? <DashboardPage /> : null}
+            {r === '/products' ? <ProductsPage /> : null}
+            {r === '/orders' ? <OrdersPage /> : null}
+            {r === '/customers' ? <CustomersPage /> : null}
+            {(r !== '/' && r !== '/dashboard' && r !== '/products' && r !== '/orders' && r !== '/customers') ? (
+              <div style="color: #6b7280; font-size: 16px; padding: 40px 0;">Page not found</div>
+            ) : null}
+          </main>
+        </div>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,57 @@
+import { SwissComponent } from '@kibologic/core';
+import { MetricCard } from '../components/MetricCard.uix';
+
+component DashboardPage {
+  render() {
+    const metrics = [
+      { icon: '&#128176;', title: 'Total Sales', value: 'MWK 2.8M', change: '+18%', changeType: 'up' },
+      { icon: '&#128722;', title: 'Orders', value: '342', change: '+12%', changeType: 'up' },
+      { icon: '&#128200;', title: 'Avg Order', value: 'MWK 8,190', change: '+4%', changeType: 'up' },
+      { icon: '&#128260;', title: 'Return Rate', value: '2.1%', change: '-0.3%', changeType: 'down' },
+    ];
+
+    const topProducts = [
+      { name: 'Wireless Headphones Pro', units: 89, revenue: 'MWK 445,000' },
+      { name: 'Smart Watch Series 3', units: 67, revenue: 'MWK 670,000' },
+      { name: 'USB-C Hub 7-in-1', units: 143, revenue: 'MWK 286,000' },
+      { name: 'Mechanical Keyboard RGB', units: 52, revenue: 'MWK 364,000' },
+      { name: 'Webcam HD 1080p', units: 78, revenue: 'MWK 234,000' },
+      { name: 'Gaming Mouse Precision', units: 95, revenue: 'MWK 190,000' },
+    ];
+
+    return (
+      <div>
+        <div style="margin-bottom:24px;">
+          <h1 style="font-size:22px;font-weight:700;color:#111827;">Dashboard</h1>
+          <p style="font-size:14px;color:#6b7280;margin-top:4px;">Welcome back. Here is what is happening today.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
+          {metrics.map((m: any) => (
+            <MetricCard key={m.title} icon={m.icon} title={m.title} value={m.value} change={m.change} changeType={m.changeType} />
+          ))}
+        </div>
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
+          <h2 style="font-size:16px;font-weight:700;color:#111827;margin-bottom:20px;">Top Products</h2>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="text-align:left;padding:10px 12px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Product</th>
+                <th style="text-align:right;padding:10px 12px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Units Sold</th>
+                <th style="text-align:right;padding:10px 12px;font-size:12px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid #e5e7eb;">Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topProducts.map((p: any, i: number) => (
+                <tr key={p.name} style={i % 2 === 0 ? 'background:#f9fafb;' : ''}>
+                  <td style="padding:12px;font-size:14px;color:#111827;font-weight:500;">{p.name}</td>
+                  <td style="padding:12px;font-size:14px;color:#374151;text-align:right;">{p.units}</td>
+                  <td style="padding:12px;font-size:14px;color:#059669;font-weight:600;text-align:right;">{p.revenue}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  }
+}

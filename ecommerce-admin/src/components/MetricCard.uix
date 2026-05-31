@@ -1,0 +1,38 @@
+import { SwissComponent } from '@kibologic/core';
+
+component MetricCard {
+  props {
+    icon: string = '';
+    title: string = '';
+    value: string = '';
+    change: string = '';
+    changeType: string = 'neutral';
+  }
+
+  _changeColor(): string {
+    if (this.changeType === 'up') return '#059669';
+    if (this.changeType === 'down') return '#ef4444';
+    return '#6b7280';
+  }
+
+  _changeArrow(): string {
+    if (this.changeType === 'up') return '↑';
+    if (this.changeType === 'down') return '↓';
+    return '→';
+  }
+
+  render() {
+    const color = this._changeColor();
+    const arrow = this._changeArrow();
+    return (
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.07);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <p style="font-size:13px;color:#6b7280;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;">{this.title}</p>
+          <span style="font-size:22px;">{this.icon}</span>
+        </div>
+        <p style="font-size:28px;font-weight:700;color:#111827;margin-bottom:8px;">{this.value}</p>
+        <p style={`font-size:13px;color:${color};font-weight:500;`}>{arrow} {this.change} vs last month</p>
+      </div>
+    );
+  }
+}
