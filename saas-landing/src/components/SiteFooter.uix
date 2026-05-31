@@ -1,0 +1,49 @@
+import { SwissComponent } from '@kibologic/core';
+
+component SiteFooter {
+  render() {
+    return (
+      <footer style="background:#0f172a;color:#94a3b8;padding:60px 24px 32px;">
+        <div style="max-width:1100px;margin:0 auto;">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;">
+            <div>
+              <span style="font-size:20px;font-weight:900;color:#fff;display:block;margin-bottom:12px;">StreamFlow</span>
+              <p style="font-size:14px;color:#64748b;line-height:1.7;max-width:260px;">Real-time analytics and dashboards for modern data teams. Turn your data into decisions, instantly.</p>
+            </div>
+            <div>
+              <p style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Product</p>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Features</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Pricing</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Changelog</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Roadmap</a>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Resources</p>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Documentation</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">API Reference</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Blog</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Status</a>
+              </div>
+            </div>
+            <div>
+              <p style="font-size:12px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Company</p>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">About</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Careers</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Privacy</a>
+                <a href="/" style="color:#64748b;text-decoration:none;font-size:14px;">Terms</a>
+              </div>
+            </div>
+          </div>
+          <div style="border-top:1px solid #1e293b;padding-top:24px;display:flex;align-items:center;justify-content:space-between;">
+            <p style="font-size:13px;color:#475569;">© 2026 StreamFlow, Inc. All rights reserved.</p>
+            <p style="font-size:13px;color:#475569;">Built with SwissJS</p>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+}

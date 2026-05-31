@@ -1,0 +1,24 @@
+import { SwissComponent } from '@kibologic/core';
+import { SiteNavbar } from '../components/SiteNavbar.uix';
+import { HeroSection } from '../components/HeroSection.uix';
+import { FeaturesSection } from '../components/FeaturesSection.uix';
+import { PricingSection } from '../components/PricingSection.uix';
+import { TestimonialsSection } from '../components/TestimonialsSection.uix';
+import { CtaSection } from '../components/CtaSection.uix';
+import { SiteFooter } from '../components/SiteFooter.uix';
+
+component LandingPage {
+  render() {
+    return (
+      <div style="min-height:100vh;">
+        <SiteNavbar />
+        <HeroSection />
+        <FeaturesSection />
+        <TestimonialsSection />
+        <PricingSection />
+        <CtaSection />
+        <SiteFooter />
+      </div>
+    );
+  }
+}
