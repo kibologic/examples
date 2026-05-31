@@ -1,0 +1,47 @@
+import { SwissComponent } from '@kibologic/core';
+
+component AdminNav {
+  props {
+    activeRoute: string = '/';
+  }
+
+  _isActive(path: string): boolean {
+    const r = this.activeRoute || '/';
+    if (path === '/') return r === '/' || r === '/dashboard';
+    return r === path;
+  }
+
+  _linkStyle(path: string): string {
+    const active = this._isActive(path);
+    if (active) {
+      return 'display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;color:#fff;background:#059669;margin-bottom:4px;';
+    }
+    return 'display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;color:#9ca3af;margin-bottom:4px;';
+  }
+
+  render() {
+    return (
+      <nav style="position:fixed;top:0;left:0;width:220px;height:100vh;background:#111827;display:flex;flex-direction:column;padding:24px 12px;z-index:100;overflow-y:auto;">
+        <div style="padding:0 8px;margin-bottom:32px;">
+          <span style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.5px;">Shop Admin</span>
+        </div>
+        <a href="/" style={this._linkStyle('/')}>
+          <span style="font-size:16px;">&#127968;</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="/products" style={this._linkStyle('/products')}>
+          <span style="font-size:16px;">&#128230;</span>
+          <span>Products</span>
+        </a>
+        <a href="/orders" style={this._linkStyle('/orders')}>
+          <span style="font-size:16px;">&#128722;</span>
+          <span>Orders</span>
+        </a>
+        <a href="/customers" style={this._linkStyle('/customers')}>
+          <span style="font-size:16px;">&#128100;</span>
+          <span>Customers</span>
+        </a>
+      </nav>
+    );
+  }
+}

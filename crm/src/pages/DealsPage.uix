@@ -1,0 +1,71 @@
+import { SwissComponent } from '@kibologic/core';
+import { DealCard } from '../components/DealCard.uix';
+
+component DealsPage {
+  state { let deals: any[] = [
+    { id: 1, name: 'Q2 Bulk Maize Order', company: 'Freshmart Ltd', value: '450,000', stage: 'Lead', owner: 'Sarah Banda', daysInStage: 3 },
+    { id: 2, name: 'Annual Supply Agreement', company: 'Urban Grocers', value: '2,100,000', stage: 'Qualified', owner: 'David Kalua', daysInStage: 12 },
+    { id: 3, name: 'Retail Stock Refresh', company: 'Chirwa Enterprises', value: '780,000', stage: 'Qualified', owner: 'Sarah Banda', daysInStage: 7 },
+    { id: 4, name: 'Hardware Supplies Contract', company: 'Blantyre Hardware', value: '320,000', stage: 'Proposal', owner: 'James Banda', daysInStage: 4 },
+    { id: 5, name: 'Office Consumables Deal', company: 'NK Electronics', value: '95,000', stage: 'Proposal', owner: 'David Kalua', daysInStage: 2 },
+    { id: 6, name: 'Farm Input Package', company: 'Gondwe Farms', value: '1,200,000', stage: 'Proposal', owner: 'Sarah Banda', daysInStage: 9 },
+    { id: 7, name: 'Logistics Partnership', company: 'Kalua Logistics', value: '560,000', stage: 'Won', owner: 'James Banda', daysInStage: 0 },
+    { id: 8, name: 'Wholesale Account Setup', company: 'Mvula Wholesale', value: '3,400,000', stage: 'Won', owner: 'Sarah Banda', daysInStage: 0 },
+    { id: 9, name: 'Textile Import Deal', company: 'Mbewe Textiles', value: '870,000', stage: 'Won', owner: 'David Kalua', daysInStage: 0 },
+    { id: 10, name: 'Building Materials Supply', company: 'Kamanga Builders', value: '1,650,000', stage: 'Lost', owner: 'James Banda', daysInStage: 0 },
+    { id: 11, name: 'Import License Renewal', company: 'Chikwanda Imports', value: '180,000', stage: 'Lost', owner: 'Sarah Banda', daysInStage: 0 },
+    { id: 12, name: 'Holdings Investment Package', company: 'Zgambo Holdings', value: '5,000,000', stage: 'Lead', owner: 'David Kalua', daysInStage: 1 },
+  ]; }
+
+  _columnDeals(stage: string): any[] {
+    return this.deals.filter((d: any) => d.stage === stage);
+  }
+
+  _totalValue(stage: string): string {
+    const total = this._columnDeals(stage).reduce((sum: number, d: any) => {
+      const n = parseFloat(d.value.replace(/,/g, ''));
+      return sum + (isNaN(n) ? 0 : n);
+    }, 0);
+    if (total >= 1000000) return (total / 1000000).toFixed(1) + 'M';
+    if (total >= 1000) return (total / 1000).toFixed(0) + 'K';
+    return String(total);
+  }
+
+  _stageHeaderColor(stage: string): string {
+    if (stage === 'Won') return '#059669';
+    if (stage === 'Lost') return '#dc2626';
+    if (stage === 'Proposal') return '#d97706';
+    if (stage === 'Qualified') return '#7c3aed';
+    return '#2563eb';
+  }
+
+  render() {
+    const stages = ['Lead', 'Qualified', 'Proposal', 'Won', 'Lost'];
+    return (
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+          <h1 style="font-size: 22px; font-weight: 800; color: #111827; letter-spacing: -0.02em;">Deals</h1>
+          <button style="background: #2563eb; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;">+ Add Deal</button>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: start;">
+          {stages.map(stage => (
+            <div key={stage}>
+              <div style={`display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 10px 12px; background: ${this._stageHeaderColor(stage)}10; border-radius: 8px; border: 1px solid ${this._stageHeaderColor(stage)}30;`}>
+                <div>
+                  <div style={`font-size: 13px; font-weight: 700; color: ${this._stageHeaderColor(stage)};`}>{stage}</div>
+                  <div style="font-size: 11px; color: #9ca3af; margin-top: 1px;">{this._columnDeals(stage).length} deals</div>
+                </div>
+                <div style="font-size: 11px; font-weight: 700; color: #6b7280;">MWK {this._totalValue(stage)}</div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                {this._columnDeals(stage).map((deal: any) => (
+                  <DealCard key={deal.id} name={deal.name} company={deal.company} value={deal.value} stage={deal.stage} owner={deal.owner} daysInStage={deal.daysInStage} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,54 @@
+import { SwissComponent } from '@kibologic/core';
+import { ContactCard } from '../components/ContactCard.uix';
+
+component ContactsPage {
+  state { let search: string = ''; }
+  state { let contacts: any[] = [
+    { id: 1, name: 'James Banda', company: 'Freshmart Ltd', email: 'j.banda@freshmart.mw', phone: '+265 991 234 567', lastContact: '2 days ago', tags: ['customer', 'vip'] },
+    { id: 2, name: 'Sarah Phiri', company: 'Urban Grocers', email: 's.phiri@urbangrocers.com', phone: '+265 888 345 678', lastContact: '1 week ago', tags: ['prospect'] },
+    { id: 3, name: 'Peter Mwale', company: 'Blantyre Hardware', email: 'p.mwale@bltyhw.com', phone: '+265 999 456 789', lastContact: '3 days ago', tags: ['customer'] },
+    { id: 4, name: 'Grace Chirwa', company: 'Chirwa Enterprises', email: 'g.chirwa@chirwaent.mw', phone: '+265 881 567 890', lastContact: '5 days ago', tags: ['customer', 'vip'] },
+    { id: 5, name: 'John Tembo', company: 'Tembo Trading', email: 'j.tembo@tembotrading.mw', phone: '+265 992 678 901', lastContact: '2 weeks ago', tags: ['prospect'] },
+    { id: 6, name: 'Mary Gondwe', company: 'Gondwe Farms', email: 'm.gondwe@gondwefarms.mw', phone: '+265 884 789 012', lastContact: '1 day ago', tags: ['customer'] },
+    { id: 7, name: 'David Kalua', company: 'Kalua Logistics', email: 'd.kalua@kalualog.com', phone: '+265 993 890 123', lastContact: '4 days ago', tags: ['partner'] },
+    { id: 8, name: 'Rose Lungu', company: 'Lungu Retail', email: 'r.lungu@lunguretail.mw', phone: '+265 885 901 234', lastContact: '6 days ago', tags: ['customer'] },
+    { id: 9, name: 'Charles Nyirenda', company: 'Nyirenda & Co', email: 'c.nyirenda@nyirendaco.mw', phone: '+265 994 012 345', lastContact: '3 weeks ago', tags: ['prospect'] },
+    { id: 10, name: 'Esther Mvula', company: 'Mvula Wholesale', email: 'e.mvula@mvulawholesale.mw', phone: '+265 886 123 456', lastContact: '1 week ago', tags: ['customer', 'vip'] },
+    { id: 11, name: 'Felix Kamanga', company: 'Kamanga Builders', email: 'f.kamanga@kamangebuild.mw', phone: '+265 995 234 567', lastContact: '10 days ago', tags: ['partner'] },
+    { id: 12, name: 'Agnes Chikwanda', company: 'Chikwanda Imports', email: 'a.chikwanda@ckimports.mw', phone: '+265 887 345 678', lastContact: '2 days ago', tags: ['customer'] },
+    { id: 13, name: 'Samuel Mbewe', company: 'Mbewe Textiles', email: 's.mbewe@mbewetex.mw', phone: '+265 996 456 789', lastContact: '1 month ago', tags: ['prospect'] },
+    { id: 14, name: 'Patricia Nkhomazana', company: 'NK Electronics', email: 'p.nkhomazana@nkelec.mw', phone: '+265 888 567 890', lastContact: '5 days ago', tags: ['customer'] },
+    { id: 15, name: 'Timothy Zgambo', company: 'Zgambo Holdings', email: 't.zgambo@zgambohld.mw', phone: '+265 997 678 901', lastContact: '3 days ago', tags: ['customer', 'vip'] },
+  ]; }
+
+  render() {
+    const q = this.search.toLowerCase();
+    const filtered = q
+      ? this.contacts.filter((c: any) =>
+          c.name.toLowerCase().includes(q) ||
+          c.company.toLowerCase().includes(q) ||
+          c.email.toLowerCase().includes(q)
+        )
+      : this.contacts;
+
+    return (
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <div>
+            <h1 style="font-size: 22px; font-weight: 800; color: #111827; letter-spacing: -0.02em;">Contacts</h1>
+            <div style="font-size: 13px; color: #6b7280; margin-top: 2px;">Showing {filtered.length} of {this.contacts.length} contacts</div>
+          </div>
+          <button style="background: #2563eb; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;">+ Add Contact</button>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <input type="text" placeholder="Search contacts..." value={this.search} oninput={(e: any) => { this.search = e.target.value; this.scheduleUpdate(); }} style="background: #fff; border: 1px solid #d1d5db; border-radius: 8px; padding: 10px 14px; font-size: 14px; color: #111827; width: 320px; outline: none;" />
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+          {filtered.map((c: any) => (
+            <ContactCard key={c.id} id={c.id} name={c.name} company={c.company} email={c.email} phone={c.phone} lastContact={c.lastContact} tags={c.tags} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+}

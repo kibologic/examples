@@ -1,0 +1,47 @@
+import { SwissComponent } from '@kibologic/core';
+import { KpiCard } from '../components/KpiCard.uix';
+import { DataTable } from '../components/DataTable.uix';
+import { StatusBadge } from '../components/StatusBadge.uix';
+
+component DashboardPage {
+  render() {
+    const kpis = [
+      { title: 'Total Revenue', value: 'MWK 4.2M', change: '+12%', changeType: 'up' },
+      { title: 'Active Users', value: '247', change: '+3%', changeType: 'up' },
+      { title: 'Transactions Today', value: '1,847', change: '+8%', changeType: 'up' },
+      { title: 'Open Issues', value: '12', change: '-4%', changeType: 'down' },
+    ];
+
+    const activityColumns = [
+      { key: 'user', label: 'User' },
+      { key: 'action', label: 'Action' },
+      { key: 'time', label: 'Time' },
+      { key: 'status', label: 'Status' },
+    ];
+
+    const activityRows = [
+      { id: 1, user: 'James Banda', action: 'Created invoice INV-0042', time: '2 min ago', status: 'completed' },
+      { id: 2, user: 'Sarah Phiri', action: 'Updated stock: Maize 50kg', time: '8 min ago', status: 'completed' },
+      { id: 3, user: 'Peter Mwale', action: 'Opened support ticket #88', time: '15 min ago', status: 'pending' },
+      { id: 4, user: 'Grace Chirwa', action: 'Processed POS sale MWK 8,400', time: '21 min ago', status: 'completed' },
+      { id: 5, user: 'John Tembo', action: 'Failed login attempt', time: '34 min ago', status: 'error' },
+      { id: 6, user: 'Mary Gondwe', action: 'Approved leave request', time: '1 hr ago', status: 'completed' },
+      { id: 7, user: 'David Kalua', action: 'Generated monthly report', time: '2 hr ago', status: 'completed' },
+      { id: 8, user: 'Rose Lungu', action: 'Added new supplier: Farmers Co-op', time: '3 hr ago', status: 'completed' },
+    ];
+
+    return (
+      <div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+          {kpis.map(k => (
+            <KpiCard key={k.title} title={k.title} value={k.value} change={k.change} changeType={k.changeType} />
+          ))}
+        </div>
+        <div style="background: #1a1a2e; border: 1px solid #2d2d4e; border-radius: 12px; padding: 20px;">
+          <h2 style="font-size: 15px; font-weight: 700; color: #e2e8f0; margin-bottom: 16px;">Recent Activity</h2>
+          <DataTable columns={activityColumns} rows={activityRows} />
+        </div>
+      </div>
+    );
+  }
+}

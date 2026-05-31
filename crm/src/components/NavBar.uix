@@ -1,0 +1,29 @@
+import { SwissComponent } from '@kibologic/core';
+
+component NavBar {
+  render() {
+    const { activeRoute } = this.props;
+    const navLinks = [
+      { label: 'Contacts', href: '/contacts' },
+      { label: 'Deals', href: '/deals' },
+      { label: 'Activity', href: '/activity' },
+    ];
+    return (
+      <header style="height: 60px; background: #fff; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; position: sticky; top: 0; z-index: 40;">
+        <div style="display: flex; align-items: center; gap: 32px;">
+          <div style="font-size: 18px; font-weight: 900; color: #111827; letter-spacing: -0.04em;">CRM Pro</div>
+          <nav style="display: flex; align-items: center; gap: 4px;">
+            {navLinks.map(link => (
+              <a key={link.href} href={link.href} style={`padding: 7px 14px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.15s; color: ${(activeRoute === link.href || (activeRoute === '/' && link.href === '/contacts') || (link.href === '/contacts' && activeRoute && activeRoute.startsWith('/contact'))) ? '#2563eb' : '#6b7280'}; background: ${(activeRoute === link.href || (activeRoute === '/' && link.href === '/contacts') || (link.href === '/contacts' && activeRoute && activeRoute.startsWith('/contact'))) ? '#eff6ff' : 'transparent'};`}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 34px; height: 34px; border-radius: 50%; background: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; cursor: pointer;">SB</div>
+        </div>
+      </header>
+    );
+  }
+}

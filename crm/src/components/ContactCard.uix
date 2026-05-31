@@ -1,0 +1,52 @@
+import { SwissComponent } from '@kibologic/core';
+
+component ContactCard {
+  _initials(name: string): string {
+    return name.split(' ').map((w: string) => w[0]).join('').toUpperCase().slice(0, 2);
+  }
+
+  _avatarColor(name: string): string {
+    const colors = ['#2563eb', '#7c3aed', '#db2777', '#059669', '#d97706', '#dc2626', '#0891b2'];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    return colors[Math.abs(hash) % colors.length];
+  }
+
+  render() {
+    const { id, name, company, email, phone, lastContact, tags } = this.props;
+    const initials = this._initials(name || '');
+    const avatarBg = this._avatarColor(name || '');
+    const tagList = tags || [];
+    return (
+      <a href={`/contacts/${id}`} style="display: block; text-decoration: none;">
+        <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s;" onmouseover={(e: any) => { e.currentTarget.style.boxShadow='0 4px 16px rgba(0,0,0,0.08)'; e.currentTarget.style.borderColor='#2563eb'; }} onmouseout={(e: any) => { e.currentTarget.style.boxShadow='none'; e.currentTarget.style.borderColor='#e5e7eb'; }}>
+          <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style={`width: 44px; height: 44px; border-radius: 50%; background: ${avatarBg}; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #fff; flex-shrink: 0;`}>{initials}</div>
+            <div style="min-width: 0; flex: 1;">
+              <div style="font-size: 15px; font-weight: 700; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{name}</div>
+              <div style="font-size: 13px; color: #6b7280; margin-top: 2px;">{company}</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px;">
+            <div style="font-size: 12px; color: #374151; display: flex; align-items: center; gap: 6px;">
+              <span style="color: #9ca3af;">📧</span>
+              <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{email}</span>
+            </div>
+            <div style="font-size: 12px; color: #374151; display: flex; align-items: center; gap: 6px;">
+              <span style="color: #9ca3af;">📞</span>
+              {phone}
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              {tagList.map((tag: string) => (
+                <span key={tag} style="background: #eff6ff; color: #2563eb; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px;">{tag}</span>
+              ))}
+            </div>
+            <div style="font-size: 11px; color: #9ca3af;">{lastContact}</div>
+          </div>
+        </div>
+      </a>
+    );
+  }
+}

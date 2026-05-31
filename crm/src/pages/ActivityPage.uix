@@ -1,0 +1,57 @@
+import { SwissComponent } from '@kibologic/core';
+import { ActivityItem } from '../components/ActivityItem.uix';
+
+component ActivityPage {
+  state { let typeFilter: string = 'all'; }
+  state { let activities: any[] = [
+    { id: 1, type: 'call', description: 'Discussed Q2 order and delivery timelines', contact: 'James Banda', time: '30 min ago' },
+    { id: 2, type: 'email', description: 'Sent updated pricing sheet for bulk orders', contact: 'Sarah Phiri', time: '1 hour ago' },
+    { id: 3, type: 'meeting', description: 'Quarterly business review at client office', contact: 'Grace Chirwa', time: '2 hours ago' },
+    { id: 4, type: 'note', description: 'Client requested a demo of the new inventory module', contact: 'Peter Mwale', time: '3 hours ago' },
+    { id: 5, type: 'call', description: 'Follow-up on pending invoice payment', contact: 'John Tembo', time: '5 hours ago' },
+    { id: 6, type: 'email', description: 'Sent contract renewal documents for signature', contact: 'Mary Gondwe', time: '1 day ago' },
+    { id: 7, type: 'meeting', description: 'Introduction call with new procurement team', contact: 'David Kalua', time: '1 day ago' },
+    { id: 8, type: 'note', description: 'Competitor offering 5% lower pricing — need to review', contact: 'Rose Lungu', time: '1 day ago' },
+    { id: 9, type: 'call', description: 'Resolved delivery complaint from last shipment', contact: 'Charles Nyirenda', time: '2 days ago' },
+    { id: 10, type: 'email', description: 'Monthly newsletter and product update sent', contact: 'Esther Mvula', time: '2 days ago' },
+    { id: 11, type: 'meeting', description: 'Site visit to assess warehouse storage needs', contact: 'Felix Kamanga', time: '3 days ago' },
+    { id: 12, type: 'call', description: 'Negotiated extended payment terms', contact: 'Agnes Chikwanda', time: '3 days ago' },
+    { id: 13, type: 'note', description: 'Flagged account for credit review — overdue balance', contact: 'Samuel Mbewe', time: '4 days ago' },
+    { id: 14, type: 'email', description: 'Responded to product availability inquiry', contact: 'Patricia Nkhomazana', time: '4 days ago' },
+    { id: 15, type: 'meeting', description: 'Strategy meeting to discuss partnership expansion', contact: 'Timothy Zgambo', time: '5 days ago' },
+    { id: 16, type: 'call', description: 'Cold call — introduced our wholesale program', contact: 'New Prospect', time: '5 days ago' },
+    { id: 17, type: 'email', description: 'Sent welcome package to new account', contact: 'James Banda', time: '6 days ago' },
+    { id: 18, type: 'note', description: 'VIP client — ensure priority delivery on all orders', contact: 'Grace Chirwa', time: '1 week ago' },
+    { id: 19, type: 'meeting', description: 'Annual contract review and renewal discussion', contact: 'Esther Mvula', time: '1 week ago' },
+    { id: 20, type: 'call', description: 'Upsell call — offered premium tier subscription', contact: 'Timothy Zgambo', time: '1 week ago' },
+  ]; }
+
+  render() {
+    const filterTypes = ['all', 'call', 'email', 'meeting', 'note'];
+    const filtered = this.typeFilter === 'all'
+      ? this.activities
+      : this.activities.filter((a: any) => a.type === this.typeFilter);
+
+    return (
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+          <h1 style="font-size: 22px; font-weight: 800; color: #111827; letter-spacing: -0.02em;">Activity</h1>
+          <button style="background: #2563eb; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;">+ Log Activity</button>
+        </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+          {filterTypes.map(ft => (
+            <button key={ft} onclick={() => { this.typeFilter = ft; this.scheduleUpdate(); }} style={`padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid ${this.typeFilter === ft ? '#2563eb' : '#e5e7eb'}; background: ${this.typeFilter === ft ? '#2563eb' : '#fff'}; color: ${this.typeFilter === ft ? '#fff' : '#6b7280'}; text-transform: capitalize; transition: all 0.15s;`}>{ft === 'all' ? 'All' : ft + 's'}</button>
+          ))}
+        </div>
+        <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 8px 20px;">
+          {filtered.length === 0 ? (
+            <div style="padding: 32px 0; text-align: center; color: #9ca3af; font-size: 14px;">No activities found</div>
+          ) : null}
+          {filtered.map((a: any) => (
+            <ActivityItem key={a.id} type={a.type} description={a.description} contact={a.contact} time={a.time} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
