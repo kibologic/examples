@@ -1,0 +1,36 @@
+import { SwissComponent } from '@kibologic/core';
+import { Sidebar } from './Sidebar.uix';
+import { Topbar } from './Topbar.uix';
+import { DashboardPage } from '../pages/DashboardPage.uix';
+import { UsersPage } from '../pages/UsersPage.uix';
+import { ReportsPage } from '../pages/ReportsPage.uix';
+
+component AppShell {
+  _getTitle(route: string): string {
+    if (route === '/users') return 'Users';
+    if (route === '/reports') return 'Reports';
+    if (route === '/settings') return 'Settings';
+    return 'Dashboard';
+  }
+
+  render() {
+    const { route } = this.props;
+    const r = route || '/dashboard';
+    return (
+      <div style="min-height: 100vh; background: #0f0f23;">
+        <Sidebar activeRoute={r} />
+        <div style="margin-left: 200px; display: flex; flex-direction: column; min-height: 100vh;">
+          <Topbar title={this._getTitle(r)} />
+          <main style="flex: 1; padding: 24px;">
+            {(r === '/' || r === '/dashboard') ? <DashboardPage /> : null}
+            {r === '/users' ? <UsersPage /> : null}
+            {r === '/reports' ? <ReportsPage /> : null}
+            {(r !== '/' && r !== '/dashboard' && r !== '/users' && r !== '/reports') ? (
+              <div style="color: #9ca3af; font-size: 16px; padding: 40px 0;">Page not found</div>
+            ) : null}
+          </main>
+        </div>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,55 @@
+import { SwissComponent } from '@kibologic/core';
+
+component ReportsPage {
+  render() {
+    const sections = [
+      {
+        name: 'Financial Reports',
+        reports: [
+          { title: 'Monthly P&L', desc: 'Profit and loss statement for the current month', icon: '💰' },
+          { title: 'Balance Sheet', desc: 'Assets, liabilities, and equity overview', icon: '📋' },
+          { title: 'Cash Flow', desc: 'Cash inflows and outflows by category', icon: '💸' },
+        ],
+      },
+      {
+        name: 'Inventory Reports',
+        reports: [
+          { title: 'Stock Summary', desc: 'Current stock levels across all warehouses', icon: '📦' },
+          { title: 'Movement Report', desc: 'All stock movements for the selected period', icon: '🔄' },
+          { title: 'Low Stock Alert', desc: 'Items below reorder threshold', icon: '⚠️' },
+        ],
+      },
+      {
+        name: 'Operations Reports',
+        reports: [
+          { title: 'Sales by Terminal', desc: 'POS sales breakdown by till and operator', icon: '🖥️' },
+          { title: 'Staff Attendance', desc: 'Attendance summary and hours worked', icon: '👤' },
+          { title: 'Audit Log', desc: 'System audit trail for the selected period', icon: '🔍' },
+        ],
+      },
+    ];
+
+    return (
+      <div>
+        <h2 style="font-size: 20px; font-weight: 800; color: #e2e8f0; letter-spacing: -0.02em; margin-bottom: 24px;">Reports</h2>
+        <div style="display: flex; flex-direction: column; gap: 32px;">
+          {sections.map(section => (
+            <div key={section.name}>
+              <h3 style="font-size: 14px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;">{section.name}</h3>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                {section.reports.map(report => (
+                  <div key={report.title} style="background: #1a1a2e; border: 1px solid #2d2d4e; border-radius: 12px; padding: 20px; cursor: pointer; transition: border-color 0.15s;" onmouseover={(e: any) => e.currentTarget.style.borderColor='#4f8ef7'} onmouseout={(e: any) => e.currentTarget.style.borderColor='#2d2d4e'}>
+                    <div style="font-size: 24px; margin-bottom: 10px;">{report.icon}</div>
+                    <div style="font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px;">{report.title}</div>
+                    <div style="font-size: 12px; color: #6b7280; line-height: 1.5; margin-bottom: 14px;">{report.desc}</div>
+                    <button style="background: #4f8ef7; color: #fff; border: none; padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; width: 100%;">Run Report</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}

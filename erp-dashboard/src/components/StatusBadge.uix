@@ -1,0 +1,23 @@
+import { SwissComponent } from '@kibologic/core';
+
+component StatusBadge {
+  props {
+    status: string = 'active';
+  }
+
+  _getColor() {
+    if (this.status === 'active') return '#10b981';
+    if (this.status === 'inactive') return '#6b7280';
+    if (this.status === 'pending') return '#f59e0b';
+    if (this.status === 'error') return '#ef4444';
+    return '#6b7280';
+  }
+
+  render() {
+    const color = this._getColor();
+    const style = `display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600;background:${color}22;color:${color};border:1px solid ${color}44;`;
+    return (
+      <span style={style}>{this.status}</span>
+    );
+  }
+}

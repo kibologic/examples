@@ -1,0 +1,66 @@
+import { SwissComponent } from '@kibologic/core';
+
+component DataTable {
+  props {
+    columns: any[] = [];
+    rows: any[] = [];
+  }
+
+  state {
+    let sortKey: string = '';
+    let sortDir: string = 'asc';
+  }
+
+  _setSort(key: string) {
+    if (this.sortKey === key) {
+      this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortKey = key;
+      this.sortDir = 'asc';
+    }
+  }
+
+  _getSortedRows() {
+    if (!this.sortKey) return this.rows;
+    return [...this.rows].sort((a, b) => {
+      const av = a[this.sortKey] ?? '';
+      const bv = b[this.sortKey] ?? '';
+      const cmp = String(av).localeCompare(String(bv));
+      return this.sortDir === 'asc' ? cmp : -cmp;
+    });
+  }
+
+  render() {
+    const sorted = this._getSortedRows();
+    return (
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+          <thead>
+            <tr style="border-bottom:2px solid #2d2d4e;">
+              {this.columns.map((col: any) => (
+                <th
+                  key={col.key}
+                  onclick={() => this._setSort(col.key)}
+                  style="padding:12px 16px;text-align:left;color:#9ca3af;font-weight:600;cursor:pointer;white-space:nowrap;user-select:none;"
+                >
+                  {col.label}{this.sortKey === col.key ? (this.sortDir === 'asc' ? ' ↑' : ' ↓') : ''}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((row: any, i: number) => (
+              <tr key={i} style={`border-bottom:1px solid #2d2d4e;background:${i % 2 === 1 ? '#16162a' : 'transparent'};`}>
+                {this.columns.map((col: any) => (
+                  <td key={col.key} style="padding:12px 16px;color:#e2e8f0;">
+                    {row[col.key] !== undefined ? String(row[col.key]) : ''}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
