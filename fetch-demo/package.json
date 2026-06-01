@@ -1,0 +1,15 @@
+{
+  "name": "fetch-demo",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node dev.mjs",
+    "build": "node dev.mjs --build"
+  },
+  "dependencies": {
+    "@kibologic/core": "0.1.6",
+    "@kibologic/swite": "0.2.31",
+    "@kibologic/compiler": "0.1.3"
+  }
+}

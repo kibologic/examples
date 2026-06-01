@@ -1,0 +1,13 @@
+import { mount, SwissComponent, createElement, Fragment } from '@kibologic/core';
+import { Counter } from './Counter.uix';
+
+globalThis.createElement = createElement;
+globalThis.Fragment = Fragment;
+
+component App {
+  render() {
+    return <Counter />;
+  }
+}
+
+mount(App, document.getElementById('app'));
