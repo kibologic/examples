@@ -1,0 +1,13 @@
+import { mount, SwissComponent, createElement, Fragment } from '@kibologic/core';
+import { UserList } from './UserList.uix';
+
+globalThis.createElement = createElement;
+globalThis.Fragment = Fragment;
+
+component App {
+  render() {
+    return <UserList />;
+  }
+}
+
+mount(App, document.getElementById('app'));

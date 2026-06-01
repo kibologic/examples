@@ -1,0 +1,13 @@
+import { mount, SwissComponent, createElement, Fragment } from '@kibologic/core';
+import { TodoApp } from './TodoApp.uix';
+
+globalThis.createElement = createElement;
+globalThis.Fragment = Fragment;
+
+component App {
+  render() {
+    return <TodoApp />;
+  }
+}
+
+mount(App, document.getElementById('app'));
