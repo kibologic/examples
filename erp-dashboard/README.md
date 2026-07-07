@@ -24,5 +24,5 @@ Open http://localhost:5200
 - `src/main.ui` — Entry point and router
 
 ## Built With
-- SwissJS (`@kibologic/core`)
-- Swite dev server (`@kibologic/swite`)
+- SwissJS (`@swissjs/core`)
+- Swite dev server (`@swissjs/swite`)
