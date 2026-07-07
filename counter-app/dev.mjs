@@ -1,4 +1,4 @@
-import { createServer } from '@kibologic/swite';
+import { createServer } from '@swissjs/swite';
 
 const server = await createServer({
   root: './src',

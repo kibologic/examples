@@ -1,4 +1,4 @@
-import { mount, SwissComponent, Signal, createElement, Fragment } from '@kibologic/core';
+import { mount, SwissComponent, Signal, createElement, Fragment } from '@swissjs/core';
 import { AppShell } from './components/AppShell.uix';
 
 globalThis.createElement = createElement;

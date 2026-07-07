@@ -1,4 +1,4 @@
-import { SwissComponent } from '@kibologic/core';
+import { SwissComponent } from '@swissjs/core';
 import { SiteHeader } from './SiteHeader.uix';
 import { SiteFooter } from './SiteFooter.uix';
 import { HomePage } from '../pages/HomePage.uix';

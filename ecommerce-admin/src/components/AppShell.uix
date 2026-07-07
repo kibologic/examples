@@ -1,4 +1,4 @@
-import { SwissComponent } from '@kibologic/core';
+import { SwissComponent } from '@swissjs/core';
 import { AdminNav } from './AdminNav.uix';
 import { DashboardPage } from '../pages/DashboardPage.uix';
 import { ProductsPage } from '../pages/ProductsPage.uix';

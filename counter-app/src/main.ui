@@ -1,4 +1,4 @@
-import { mount, SwissComponent, createElement, Fragment } from '@kibologic/core';
+import { mount, SwissComponent, createElement, Fragment } from '@swissjs/core';
 import { Counter } from './Counter.uix';
 
 globalThis.createElement = createElement;

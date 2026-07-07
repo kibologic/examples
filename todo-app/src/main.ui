@@ -1,4 +1,4 @@
-import { mount, SwissComponent, createElement, Fragment } from '@kibologic/core';
+import { mount, SwissComponent, createElement, Fragment } from '@swissjs/core';
 import { TodoApp } from './TodoApp.uix';
 
 globalThis.createElement = createElement;

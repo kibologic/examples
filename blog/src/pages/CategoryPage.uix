@@ -1,4 +1,4 @@
-import { SwissComponent } from '@kibologic/core';
+import { SwissComponent } from '@swissjs/core';
 import { PostCard } from '../components/PostCard.uix';
 import { TagBadge } from '../components/TagBadge.uix';
 

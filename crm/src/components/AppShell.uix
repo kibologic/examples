@@ -1,4 +1,4 @@
-import { SwissComponent } from '@kibologic/core';
+import { SwissComponent } from '@swissjs/core';
 import { NavBar } from './NavBar.uix';
 import { ContactsPage } from '../pages/ContactsPage.uix';
 import { ContactDetailPage } from '../pages/ContactDetailPage.uix';
